@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.addEventListener('load',function () {
+            var regex= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/igm
+            var result ;
+            var phpArray="array(";
+            var ajx = ((window.XMLHttpRequest)? new window.XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP") );
+            ajx.open("POST","emails.txt",true);
+            ajx.send();
+            ajx.addEventListener('readystatechange',function () {
+                if(ajx.readyState==4 && ajx.status==200)
+                {
+                    window.document.body.querySelector("#text").innerHTML =ajx.responseText;
+                    result= window.document.body.querySelector("#text").innerText.match(regex)
+
+                    for(var i = 0 ; i<result.length;i++)
+                    {
+
+                        if(i!=(result.length-1))
+                            phpArray+="\""+result[i]+"\",";
+                        else
+                            phpArray+="\""+result[i]+"\");";
+                    }
+                    console.log(phpArray);
+                }
+            })
+
+        })
+    </script>
+    <style>
+        #text
+        {
+            width: 80% ; margin: 0 auto;
+        }
+        #topNav
+        {
+            background: lightblue;
+            padding: 5px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+        }
+    </style>
+    <script>
+        window.addEventListener('load',function () {
+            var runnRgxBtn = window.document.querySelector("#runRegex");
+
+            runnRgxBtn.addEventListener('click',function () {
+                var getRgxText = window.document.querySelector("#rgxStr").value;
+                var rgx = new RegExp('('+getRgxText+')',"gim");
+                var textObj = window.document.querySelector("#text");
+                textObj.innerHTML = textObj.innerText.replace(rgx,"<b style='background: lightblue;'>$1</b>");
+            })
+
+        })
+    </script>
+</head>
+<body>
+<nav id="topNav">
+    <form class="pure-form">
+        <input type="text" id="rgxStr" value="a" class="pure-u-9-24">
+        <input type="button" id="runRegex" value="runnRgx" class="pure-button-primary pure-button">
+
+    </form>
+</nav>
+<pre dir="ltr">
+        <div id="text" contenteditable="true" >
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+            , sed diam nonummy nibh euismod tincidunt ut
+            laoreet dolore magna aliquam erat volutpat.
+            Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+            suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+            Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+            molestie consequat, vel illum dolore eu feugiat.
+            nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
+            blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+
+                    Hello Dear 7Learn.com Users
+            Welcome to Javascript and jquery course ...
+            Teacher : Loghman Avand
+            Email : avand.loghman@gmail.com , avandloghman@gmail.com
+            phone : 09210740320 , 9171490166
+            Website : http://www.7Learn.com
+            Course Page : http://7Learn.com/class/6300
+            7 is my favorite Number
+            7
+            my favirite color is Gray , #ccc , #cccccc , rgb(234,234,234) is my colors !;
+
+            http://a4net.ir
+            http://a4net.com
+            http://www.a4net.com
+            http://www.a4net.ir
+            a4net.ir
+            a4net.com
+            www.a4net.com
+            www.a4net.ir
+            https://a4net.ir
+            https://a4net.com
+            https://www.a4net.com
+            https://www.a4net.ir
+        </div>
+    </pre>
+</body>
+</html>
